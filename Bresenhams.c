@@ -6,13 +6,9 @@
 int x_0, y_0, x_1, y_1;
 
 void myInit(void) {
-    glClearColor(0.0, 0.0, 0.0, 1.0);
-    glColor3f(1.0, 0.0, 0.0);
-    glPointSize(2.0);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0.0, 500.0, 0.0, 500.0);
-    glMatrixMode(GL_MODELVIEW);
+    glClearColor(0.0, 0.0, 0.0, 1.0); // background black
+    glColor3f(1.0, 0.0, 0.0);         // initial drawing color (red)
+    gluOrtho2D(0.0, 500.0, 0.0, 500.0); // 2D coordinates
 }
 
 void drawLineBresenhamSlopeLessThan1(void) {
@@ -26,23 +22,17 @@ void drawLineBresenhamSlopeLessThan1(void) {
     dx = abs(dx);
     dy = abs(dy);
 
-    // Only works for slope < 1
-    if (dx < dy) {
-        printf("This version only handles slope < 1.\n");
-        return;
-    }
-
     int d = 2 * dy - dx;  // initial decision parameter
     int y = y_0;
 
     glBegin(GL_POINTS);
-    for (int x = x_0; x != x_1 + sx; x += sx) { // move x from x0 to x1
+    for (int x = x_0; x != x_1 + sx; x += sx) {
         glVertex2i(x, y);
         if (d > 0) {
-            y += sy;     // step in y
-            d -= 2 * dx; // adjust decision parameter
+            y += sy;
+            d -= 2 * dx;
         }
-        d += 2 * dy;     // increment decision parameter
+        d += 2 * dy;
     }
     glEnd();
     glFlush();
